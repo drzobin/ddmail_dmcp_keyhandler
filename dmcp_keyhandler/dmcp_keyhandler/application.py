@@ -2,6 +2,7 @@ from flask import Blueprint, current_app, request
 from argon2 import PasswordHasher
 import os
 import time
+import subprocess
 
 from dmcp_keyhandler.validators import is_domain_allowed, is_password_allowed, is_email_allowed
 
@@ -54,7 +55,11 @@ def create_key():
         time.sleep(1)
 
         # Create key with password
-        # Code...
+        deveadm = current_app.config["DOVEADM_BIN"]
+        output = subprocess.run([doveadm,"-o" "plugin/mail_crypt_private_password="+key_password,"mailbox","cryptokey","generate","-u",email,"-U"], check=True])
+        if output.returncode != 0:
+            return "error: returncode of cmd doveadm is non zero"
+
         return "done"
 
 @bp.route("/change_password_on_key", methods=["POST"])
@@ -93,6 +98,10 @@ def change_password_on_key():
             return "error: wrong password"
         time.sleep(1)
 
-        # Change key password
-        # Code...
+        # Change password on key.
+        deveadm = current_app.config["DOVEADM_BIN"]
+        output = subprocess.run([doveadm,"mailbox","cryptokey","password","-u",email,"-n",new_key_password,"-o",current_key_password], check=True])
+        if output.returncode != 0:
+            return "error: returncode of cmd doveadm is non zero"
+
         return "done"
