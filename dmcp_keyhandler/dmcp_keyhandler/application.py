@@ -37,7 +37,7 @@ def create_key():
             return "error: email validation failed"
 
         # Validate _keypassword.
-        if is_password_allowed(_key_password) != True:
+        if is_password_allowed(key_password) != True:
             return "error: key_password validation failed"
 
         # Validate password.
