@@ -61,7 +61,7 @@ def create_key():
             return "error: doveadm location is wrong"
 
         # Create key with password
-        output = subprocess.run([doveadm,"-o" "plugin/mail_crypt_private_password="+key_password,"mailbox","cryptokey","generate","-u",email,"-U"], check=True)
+        output = subprocess.run([doveadm,"-o","plugin/mail_crypt_private_password="+key_password,"mailbox","cryptokey","generate","-u",email,"-U"], check=True)
         if output.returncode != 0:
             return "error: returncode of cmd doveadm is non zero"
 
