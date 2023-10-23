@@ -62,7 +62,7 @@ def create_key():
 
         # Create key with password
         try:
-            output = subprocess.run(["doas",doveadm,"-o","plugin/mail_crypt_private_password="+key_password,"mailbox","cryptokey","generate","-u",email,"-U"], check=True)
+            output = subprocess.run(["/usr/bin/doas",doveadm,"-o","plugin/mail_crypt_private_password="+key_password,"mailbox","cryptokey","generate","-u",email,"-U"], check=True)
             if output.returncode != 0:
                 return "error: returncode of cmd doveadm is non zero"
         except subprocess.CalledProcessError as e:
@@ -116,7 +116,7 @@ def change_password_on_key():
 
         # Change password on key.
         try:
-            output = subprocess.run(["doas",doveadm,"mailbox","cryptokey","password","-u",email,"-n",new_key_password,"-o",current_key_password], check=True)
+            output = subprocess.run(["/usr/bin/doas",doveadm,"mailbox","cryptokey","password","-u",email,"-n",new_key_password,"-o",current_key_password], check=True)
             if output.returncode != 0:
                 return "error: returncode of cmd doveadm is non zero"
         except subprocess.CalledProcessError as e:
