@@ -1,8 +1,8 @@
 import re
 
-# Validate password. Only allow the following chars: A-Z, a-z and 0-9
+# Validate password. Passwords will be base64 encoded. Only allow the following chars: A-Z, a-z, 0-9 and +/=
 def is_password_allowed(password):
-    pattern = re.compile(r"[a-zA-Z0-9]")
+    pattern = re.compile(r"[a-zA-Z0-9\+\/\=]")
 
     for char in password:
         if not re.match(pattern, char):
