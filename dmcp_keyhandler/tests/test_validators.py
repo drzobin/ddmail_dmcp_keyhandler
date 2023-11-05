@@ -16,6 +16,8 @@ def test_is_password_allowed():
 
 def test_is_email_allowed():
     assert is_email_allowed("test@test.se") == True
+    assert is_email_allowed("test@tes-t.se") == True
+    assert is_email_allowed("t@t.s") == False
     assert is_email_allowed("test@test.se.") == False
     assert is_email_allowed(".test@test.se") == False
     assert is_email_allowed("@test.se") == False
@@ -26,11 +28,12 @@ def test_is_email_allowed():
     assert is_email_allowed("te=st@test.se") == False
     assert is_email_allowed("test@tes=t.se") == False
     assert is_email_allowed("test@test..se") == False
-    assert is_email_allowed("test@tes-t.se") == False
     assert is_email_allowed("t\"est@test.se") == False
 
 def test_is_domain_allowed():
     assert is_domain_allowed("test.se") == True
+    assert is_domain_allowed("testtes-t.se") == True
+    assert is_domain_allowed("t.s") == False
     assert is_domain_allowed("test.se.") == False
     assert is_domain_allowed(".test@test.se") == False
     assert is_domain_allowed("t@est.se") == False
@@ -41,5 +44,4 @@ def test_is_domain_allowed():
     assert is_domain_allowed("te=sttest.se") == False
     assert is_domain_allowed("test=t.se") == False
     assert is_domain_allowed("testtest..se") == False
-    assert is_domain_allowed("testtes-t.se") == False
     assert is_domain_allowed("t\"est@test.se") == False
