@@ -1,4 +1,5 @@
 .coverage
+.idea/
 dmcp_keyhandler/__pycache__/
 dmcp_keyhandler/dmcp_keyhandler/__pycache__/
 dmcp_keyhandler/tests/__pycache__/
