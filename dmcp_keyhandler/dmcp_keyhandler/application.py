@@ -1,5 +1,6 @@
 from flask import Blueprint, current_app, request
 from argon2 import PasswordHasher
+from argon2.exceptions import VerifyMismatchError
 import os
 import time
 import subprocess
@@ -58,9 +59,9 @@ def create_key():
                 time.sleep(1)
                 logging.error("create_key() wrong password")
                 return "error: wrong password"
-        except:
+        except VerifyMismatchError:
             time.sleep(1)
-            logging.error("create_key() wrong password")
+            logging.error("create_key() exceptions VerifyMismatchError, wrong password")
             return "error: wrong password"
         time.sleep(1)
 
