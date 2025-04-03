@@ -10,9 +10,6 @@ from dmcp_keyhandler.validators import is_domain_allowed, is_password_allowed, i
 
 bp = Blueprint("application", __name__, url_prefix="/")
 
-# Configure logging.
-logging.basicConfig(filename="/var/log/ddmail_dmcp_keyhandler.log", format='%(asctime)s: %(levelname)s: %(message)s', level=logging.ERROR)
-
 @bp.route("/hash_data", methods=["POST"])
 def hash_data():
     if request.method == 'POST':
