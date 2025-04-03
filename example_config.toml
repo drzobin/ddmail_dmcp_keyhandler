@@ -1,14 +1,14 @@
-class Prod():
+[PRODUCTION]
     SECRET_KEY = 'change_me'
     PASSWORD_HASH = 'change_me'
     DOVEADM_BIN = '/usr/bin/doveadm'
 
-class Test():
+[TESTING]
     SECRET_KEY = 'change_me'
     PASSWORD_HASH = 'change_me'
     DOVEADM_BIN = '/usr/bin/doveadm'
 
-class Dev():
+[DEVELOPMENT]
     SECRET_KEY = 'change_me'
     PASSWORD_HASH = 'change_me'
     DOVEADM_BIN = '/usr/bin/doveadm'
