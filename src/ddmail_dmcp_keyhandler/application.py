@@ -10,22 +10,6 @@ from dmcp_keyhandler.validators import is_domain_allowed, is_password_allowed, i
 
 bp = Blueprint("application", __name__, url_prefix="/")
 
-@bp.route("/hash_data", methods=["POST"])
-def hash_data():
-    if request.method == 'POST':
-        ph = PasswordHasher()
-
-        data = request.form.get('data')
-
-        # Validate password.
-        if is_password_allowed(data) != True:
-            logging.error("hash_data() validation of data failed")
-            return "error: validation of data failed"
-
-        data_hash = ph.hash(data)
-
-        return data_hash
-
 @bp.route("/create_key", methods=["POST"])
 def create_key():
     if request.method == 'POST':
