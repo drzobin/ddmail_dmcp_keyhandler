@@ -1,5 +1,10 @@
 import os
+import sys
+import toml
+import logging
 from flask import Flask
+from logging.config import dictConfig
+from logging import FileHandler
 
 
 def create_app(config_file=None, test_config=None):
@@ -64,7 +69,7 @@ def create_app(config_file=None, test_config=None):
         else:
             print("Error: you need to set LOGLEVEL to ERROR/WARNING/INFO/DEBUG")
             sys.exit(1)
-    elif mode == "TESTING:":
+    elif mode == "TESTING":
         app.config["SECRET_KEY"] = toml_config["TESTING"]["SECRET_KEY"]
         app.config["PASSWORD_HASH"] = toml_config["TESTING"]["PASSWORD_HASH"]
         app.config["DOVEADM_BIN"] = toml_config["TESTING"]["DOVEADM_BIN"]
