@@ -1,14 +1,20 @@
-class Prod():
+[PRODUCTION]
     SECRET_KEY = 'change_me'
     PASSWORD_HASH = 'change_me'
     DOVEADM_BIN = '/usr/bin/doveadm'
+    LOGLEVEL = 'INFO'
+    LOGFILE = '/var/log/ddmail_dmcp_keyhandler.log'
 
-class Test():
+[TESTING]
     SECRET_KEY = 'change_me'
     PASSWORD_HASH = 'change_me'
     DOVEADM_BIN = '/usr/bin/doveadm'
+    LOGLEVEL = 'INFO'
+    LOGFILE = '/var/log/ddmail_dmcp_keyhandler.log'
 
-class Dev():
+[DEVELOPMENT]
     SECRET_KEY = 'change_me'
     PASSWORD_HASH = 'change_me'
     DOVEADM_BIN = '/usr/bin/doveadm'
+    LOGLEVEL = 'INFO'
+    LOGFILE = '/var/log/ddmail_dmcp_keyhandler.log'
