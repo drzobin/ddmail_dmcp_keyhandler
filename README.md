@@ -2,7 +2,7 @@
 Web application API for dovecot mail-crypt-plugin using per folder keys for the DDMail project. Support for creating password protected keys and change password on keys.
 
 ## What is DDMail
-DDMail is a e-mail system/service that prioritizes security. A current production example can be found at www.ddmail.se
+DDMail is a e-mail system/service that prioritize security. A current production example can be found at www.ddmail.se
 
 ## Operating system
 Developt for and tested on debian 12.
