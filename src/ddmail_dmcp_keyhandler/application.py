@@ -23,8 +23,8 @@ def create_key():
             current_app.logger.error("email validation failed")
             return "error: email validation failed"
 
-        # Validate keypassword.
-        if validators.is_password_allowed(key_password) != True:
+        # Validate keypassword, base64 encoded.
+        if validators.is_base64_allowed(key_password) != True:
             current_app.logger.error("key_password validation failed")
             return "error: key_password validation failed"
 
@@ -83,13 +83,13 @@ def change_password_on_key():
             current_app.logger.error("email validation failed")
             return "error: email validation failed"
 
-        # Validate current_key_password.
-        if validators.is_password_allowed(current_key_password) != True:
+        # Validate current_key_password, base64 encoded.
+        if validators.is_base64_allowed(current_key_password) != True:
             current_app.logger.error("current_key_password validation failed")
             return "error: current_key_password validation failed"
 
-        # Validate new_key_password.
-        if validators.is_password_allowed(new_key_password) != True:
+        # Validate new_key_password, base64 encoded.
+        if validators.is_base64_allowed(new_key_password) != True:
             current_app.logger.error("new_key_password validation failed")
             return "error: new_key_password validation failed"
 
