@@ -35,7 +35,7 @@ def create_key():
 
         # Check if password is correct.
         try:
-            if ph.verify(current_app.config["PASSWORD_HASH"], password) != True:
+            if not ph.verify(current_app.config["PASSWORD_HASH"], password):
                 time.sleep(1)
                 current_app.logger.error("wrong password")
                 return "error: wrong password"
@@ -100,7 +100,7 @@ def change_password_on_key():
 
         # Check if password is correct.
         try:
-            if ph.verify(current_app.config["PASSWORD_HASH"], password) != True:
+            if not ph.verify(current_app.config["PASSWORD_HASH"], password):
                 time.sleep(1)
                 current_app.logger.error("wrong password")
                 return "error: wrong password"
