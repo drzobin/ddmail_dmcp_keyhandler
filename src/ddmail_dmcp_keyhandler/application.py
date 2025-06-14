@@ -11,6 +11,36 @@ bp = Blueprint("application", __name__, url_prefix="/")
 
 @bp.route("/create_key", methods=["POST"])
 def create_key():
+    """
+    Create a new encryption key for a user's mailbox.
+
+    This function validates the provided email, key password, and admin password.
+    If valid, it generates a new encryption key using the doveadm command.
+
+    Returns:
+        str: "done" on success
+             or an error message describing the issue encountered.
+
+    Request Form Parameters:
+        email (str): The email address of the user
+        key_password (str): Base64 encoded password to encrypt the key
+        password (str): Admin password to authenticate the request
+
+    Error Responses:
+        "error: email is none": If email parameter is missing
+        "error: key_password is none": If key_password parameter is missing
+        "error: password is none": If password parameter is missing
+        "error: email validation failed": If email fails validation
+        "error: key_password validation failed": If key_password fails validation
+        "error: password validation failed": If password fails validation
+        "error: wrong password": If admin password is incorrect
+        "error: doveadm binary location is wrong": If doveadm binary doesn't exist
+        "error: returncode of cmd doveadm is non zero": If doveadm command fails
+        "error: unkown exception running subprocess": If an unexpected error occurs
+
+    Success Response:
+        "done": Operation completed successfully
+    """
     if request.method == 'POST':
         ph = PasswordHasher()
 
@@ -83,6 +113,39 @@ def create_key():
 
 @bp.route("/change_password_on_key", methods=["POST"])
 def change_password_on_key():
+    """
+    Change the password on an existing encryption key for a user's mailbox.
+
+    This function validates the provided email, current key password, new key password,
+    and admin password. If valid, it changes the encryption key password using the doveadm command.
+
+    Returns:
+        str: "done" on success
+             or an error message describing the issue encountered.
+
+    Request Form Parameters:
+        email (str): The email address of the user
+        current_key_password (str): Base64 encoded current password of the key
+        new_key_password (str): Base64 encoded new password for the key
+        password (str): Admin password to authenticate the request
+
+    Error Responses:
+        "error: email is none": If email parameter is missing
+        "error: current_key_password is none": If current_key_password parameter is missing
+        "error: new_key_password is none": If new_key_password parameter is missing
+        "error: password is none": If password parameter is missing
+        "error: email validation failed": If email fails validation
+        "error: current_key_password validation failed": If current_key_password fails validation
+        "error: new_key_password validation failed": If new_key_password fails validation
+        "error: password validation failed": If password fails validation
+        "error: wrong password": If admin password is incorrect
+        "error: doveadm binary location is wrong": If doveadm binary doesn't exist
+        "error: returncode of cmd doveadm is non zero": If doveadm command fails
+        "error: unkown exception running subprocess": If an unexpected error occurs
+
+    Success Response:
+        "done": Operation completed successfully
+    """
     if request.method == 'POST':
         ph = PasswordHasher()
 
