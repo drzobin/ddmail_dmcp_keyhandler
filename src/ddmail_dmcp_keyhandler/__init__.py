@@ -44,7 +44,7 @@ def create_app(config_file=None, test_config=None):
 
     # Set app configurations from toml config file.
     mode = os.environ.get('MODE')
-    print("Running in MODE: " + mode)
+    print("Running in MODE: " + str(mode))
 
 # Apply configuration for the specific MODE.
     if mode == "PRODUCTION":
@@ -117,7 +117,7 @@ def create_app(config_file=None, test_config=None):
         print("Error: you need to set env variabel MODE to PRODUCTION/TESTING/DEVELOPMENT")
         sys.exit(1)
 
-    
+
     app.secret_key = app.config["SECRET_KEY"]
 
     # Ensure the instance folder exists
@@ -130,4 +130,4 @@ def create_app(config_file=None, test_config=None):
     from ddmail_dmcp_keyhandler import application
     app.register_blueprint(application.bp)
 
-    return app 
+    return app
