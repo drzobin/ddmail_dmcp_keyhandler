@@ -18,6 +18,19 @@ def create_key():
         key_password = request.form.get('key_password')
         password = request.form.get('password')
 
+        # Check if input from form is None.
+        if email is None:
+            current_app.logger.error("email is None")
+            return "error: email is none"
+
+        if key_password is None:
+            current_app.logger.error("key_password is None")
+            return "error: key_password is none"
+
+        if password is None:
+            current_app.logger.error("password is None")
+            return "error: password is none"
+
         # Validate email.
         if validators.is_email_allowed(email) != True:
             current_app.logger.error("email validation failed")
