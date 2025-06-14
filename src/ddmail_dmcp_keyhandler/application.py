@@ -78,6 +78,23 @@ def change_password_on_key():
         new_key_password = request.form.get('new_key_password')
         password = request.form.get('password')
 
+        # Check if input from form is None.
+        if email is None:
+            current_app.logger.error("email is None")
+            return "error: email is none"
+
+        if current_key_password is None:
+            current_app.logger.error("current_key_password is None")
+            return "error: current_key_password is none"
+
+        if new_key_password is None:
+            current_app.logger.error("new_key_password is None")
+            return "error: new_key_password is none"
+
+        if password is None:
+            current_app.logger.error("password is None")
+            return "error: password is none"
+
         # Validate email.
         if validators.is_email_allowed(email) != True:
             current_app.logger.error("email validation failed")
