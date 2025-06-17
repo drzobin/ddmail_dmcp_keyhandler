@@ -5,7 +5,6 @@ from ddmail_dmcp_keyhandler import create_app
 
 # Set mode to TESTING so we are sure not to run with production configuration running tests.
 os.environ["MODE"] = "TESTING"
-config_file = None
 
 
 def pytest_addoption(parser):
@@ -21,10 +20,12 @@ def pytest_addoption(parser):
         default=None,
         help="Authentication password to use during test.",
     )
+
 @pytest.fixture(scope="session")
 def config_file(request):
     """Fixture to retrieve config file"""
     return request.config.getoption("--config")
+
 
 @pytest.fixture(scope="session")
 def password(request):
@@ -43,7 +44,7 @@ def app(config_file):
     """Create and configure a new app instance for each test."""
     # Create the app with common test config
     app = create_app(config_file = config_file)
-    
+
     # Ensure test configuration has all required values
     app.config.update({
         "TESTING": True,
@@ -52,10 +53,12 @@ def app(config_file):
 
     yield app
 
+
 @pytest.fixture
 def client(app):
     """A test client for the app."""
     return app.test_client()
+
 
 @pytest.fixture
 def runner(app):
