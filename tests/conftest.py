@@ -43,7 +43,12 @@ def app(config_file):
     """Create and configure a new app instance for each test."""
     # Create the app with common test config
     app = create_app(config_file = config_file)
-    app.config.update({"TESTING": True,})
+    
+    # Ensure test configuration has all required values
+    app.config.update({
+        "TESTING": True,
+        "DOVEADM_BIN": "/bin/ls" if "DOVEADM_BIN" not in app.config else app.config["DOVEADM_BIN"]
+    })
 
     yield app
 
