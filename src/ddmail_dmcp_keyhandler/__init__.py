@@ -69,68 +69,25 @@ def create_app(config_file=None, test_config=None):
     print("Running in MODE: " + str(mode))
 
 # Apply configuration for the specific MODE.
-    if mode == "PRODUCTION":
-        app.config["SECRET_KEY"] = toml_config["PRODUCTION"]["SECRET_KEY"]
-        app.config["PASSWORD_HASH"] = toml_config["PRODUCTION"]["PASSWORD_HASH"]
-        app.config["DOVEADM_BIN"] = toml_config["PRODUCTION"]["DOVEADM_BIN"]
+    if mode == "PRODUCTION" or mode == "TESTING" or mode == "DEVELOPMENT":
+
+        app.config["SECRET_KEY"] = toml_config[mode]["SECRET_KEY"]
+        app.config["PASSWORD_HASH"] = toml_config[mode]["PASSWORD_HASH"]
+        app.config["DOVEADM_BIN"] = toml_config[mode]["DOVEADM_BIN"]
 
         # Configure logfile.
-        file_handler = FileHandler(filename=toml_config["PRODUCTION"]["LOGFILE"])
+        file_handler = FileHandler(filename=toml_config[mode]["LOGFILE"])
         file_handler.setFormatter(logging.Formatter(log_format))
         app.logger.addHandler(file_handler)
 
         # Configure loglevel.
-        if toml_config["PRODUCTION"]["LOGLEVEL"] == "ERROR":
+        if toml_config[mode]["LOGLEVEL"] == "ERROR":
             app.logger.setLevel(logging.ERROR)
-        elif toml_config["PRODUCTION"]["LOGLEVEL"] == "WARNING":
+        elif toml_config[mode]["LOGLEVEL"] == "WARNING":
             app.logger.setLevel(logging.WARNING)
-        elif toml_config["PRODUCTION"]["LOGLEVEL"] == "INFO":
+        elif toml_config[mode]["LOGLEVEL"] == "INFO":
             app.logger.setLevel(logging.INFO)
-        elif toml_config["PRODUCTION"]["LOGLEVEL"] == "DEBUG":
-            app.logger.setLevel(logging.DEBUG)
-        else:
-            print("Error: you need to set LOGLEVEL to ERROR/WARNING/INFO/DEBUG")
-            sys.exit(1)
-    elif mode == "TESTING":
-        app.config["SECRET_KEY"] = toml_config["TESTING"]["SECRET_KEY"]
-        app.config["PASSWORD_HASH"] = toml_config["TESTING"]["PASSWORD_HASH"]
-        app.config["DOVEADM_BIN"] = toml_config["TESTING"]["DOVEADM_BIN"]
-
-        # Configure logfile.
-        file_handler = FileHandler(filename=toml_config["TESTING"]["LOGFILE"])
-        file_handler.setFormatter(logging.Formatter(log_format))
-        app.logger.addHandler(file_handler)
-
-        # Configure loglevel.
-        if toml_config["TESTING"]["LOGLEVEL"] == "ERROR":
-            app.logger.setLevel(logging.ERROR)
-        elif toml_config["TESTING"]["LOGLEVEL"] == "WARNING":
-            app.logger.setLevel(logging.WARNING)
-        elif toml_config["TESTING"]["LOGLEVEL"] == "INFO":
-            app.logger.setLevel(logging.INFO)
-        elif toml_config["TESTING"]["LOGLEVEL"] == "DEBUG":
-            app.logger.setLevel(logging.DEBUG)
-        else:
-            print("Error: you need to set LOGLEVEL to ERROR/WARNING/INFO/DEBUG")
-            sys.exit(1)
-    elif mode == "DEVELOPMENT":
-        app.config["SECRET_KEY"] = toml_config["DEVELOPMENT"]["SECRET_KEY"]
-        app.config["PASSWORD_HASH"] = toml_config["DEVELOPMENT"]["PASSWORD_HASH"]
-        app.config["DOVEADM_BIN"] = toml_config["DEVELOPMENT"]["DOVEADM_BIN"]
-
-        # Configure logfile.
-        file_handler = FileHandler(filename=toml_config["DEVELOPMENT"]["LOGFILE"])
-        file_handler.setFormatter(logging.Formatter(log_format))
-        app.logger.addHandler(file_handler)
-
-        # Configure loglevel.
-        if toml_config["DEVELOPMENT"]["LOGLEVEL"] == "ERROR":
-            app.logger.setLevel(logging.ERROR)
-        elif toml_config["DEVELOPMENT"]["LOGLEVEL"] == "WARNING":
-            app.logger.setLevel(logging.WARNING)
-        elif toml_config["DEVELOPMENT"]["LOGLEVEL"] == "INFO":
-            app.logger.setLevel(logging.INFO)
-        elif toml_config["DEVELOPMENT"]["LOGLEVEL"] == "DEBUG":
+        elif toml_config[mode]["LOGLEVEL"] == "DEBUG":
             app.logger.setLevel(logging.DEBUG)
         else:
             print("Error: you need to set LOGLEVEL to ERROR/WARNING/INFO/DEBUG")
@@ -138,7 +95,6 @@ def create_app(config_file=None, test_config=None):
     else:
         print("Error: you need to set env variabel MODE to PRODUCTION/TESTING/DEVELOPMENT")
         sys.exit(1)
-
 
     app.secret_key = app.config["SECRET_KEY"]
 
