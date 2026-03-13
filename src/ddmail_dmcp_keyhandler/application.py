@@ -9,6 +9,7 @@ from argon2.exceptions import VerifyMismatchError
 
 bp = Blueprint("application", __name__, url_prefix="/")
 
+
 @bp.route("/create_key", methods=["POST"])
 def create_key() -> Response:
     """
@@ -40,15 +41,15 @@ def create_key() -> Response:
     Success Response:
         "done": Operation completed successfully
     """
-    
-    if request.method != 'POST':
+
+    if request.method != "POST":
         return make_response("Method not allowed", 405)
 
     ph = PasswordHasher()
 
-    email = request.form.get('email')
-    key_password = request.form.get('key_password')
-    password = request.form.get('password')
+    email = request.form.get("email")
+    key_password = request.form.get("key_password")
+    password = request.form.get("password")
 
     # Check if input from form is None.
     if email is None:
@@ -99,7 +100,22 @@ def create_key() -> Response:
 
     # Create key with password
     try:
-        output = subprocess.run(["/usr/bin/doas",doveadm,"-o","plugin/mail_crypt_private_password="+key_password,"mailbox","cryptokey","generate","-u",email,"-U"], check=True)
+        output = subprocess.run(
+            [
+                "/usr/bin/doas",
+                doveadm,
+                "-o",
+                "crypt_user_key_password=" + key_password,
+                "mailbox",
+                "cryptokey",
+                "generate",
+                "-u",
+                email,
+                "-U",
+            ],
+            check=True,
+        )
+
         if output.returncode != 0:
             current_app.logger.error("returncode of cmd doveadm is non zero")
             return make_response("error: returncode of cmd doveadm is non zero", 200)
@@ -112,6 +128,7 @@ def create_key() -> Response:
 
     current_app.logger.debug("create key for email " + email + " is done")
     return make_response("done", 200)
+
 
 @bp.route("/change_password_on_key", methods=["POST"])
 def change_password_on_key() -> Response:
@@ -148,15 +165,15 @@ def change_password_on_key() -> Response:
     Success Response:
         "done": Operation completed successfully
     """
-    if request.method != 'POST':
+    if request.method != "POST":
         return make_response("Method not allowed", 405)
 
     ph = PasswordHasher()
 
-    email = request.form.get('email')
-    current_key_password = request.form.get('current_key_password')
-    new_key_password = request.form.get('new_key_password')
-    password = request.form.get('password')
+    email = request.form.get("email")
+    current_key_password = request.form.get("current_key_password")
+    new_key_password = request.form.get("new_key_password")
+    password = request.form.get("password")
 
     # Check if input from form is None.
     if email is None:
@@ -216,7 +233,22 @@ def change_password_on_key() -> Response:
 
     # Change password on key.
     try:
-        output = subprocess.run(["/usr/bin/doas",doveadm,"mailbox","cryptokey","password","-u",email,"-n",new_key_password,"-o",current_key_password], check=True)
+        output = subprocess.run(
+            [
+                "/usr/bin/doas",
+                doveadm,
+                "mailbox",
+                "cryptokey",
+                "password",
+                "-u",
+                email,
+                "-n",
+                new_key_password,
+                "-o",
+                current_key_password,
+            ],
+            check=True,
+        )
         if output.returncode != 0:
             current_app.logger.error("returncode of cmd doveadm is non zero")
             return make_response("error: returncode of cmd doveadm is non zero", 200)
