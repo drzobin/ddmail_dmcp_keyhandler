@@ -30,6 +30,7 @@ dev = [
   "ddmail-validators",
   "pytest",
   "pytest-cov",
+  "pytest-mock",
   "flake8",
   "hatchling",
   "twine",
@@ -42,6 +43,7 @@ test = [
   "ddmail-validators",
   "pytest",
   "pytest-cov",
+  "pytest-mock",
   "flake8",
 ]
 
